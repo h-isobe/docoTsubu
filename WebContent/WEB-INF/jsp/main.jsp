@@ -4,8 +4,10 @@
 <%@ page import="model.User,model.Mutter,java.util.List" %>
 <!-- セッションスコープに保存されたユーザー情報を取得 -->
 <% User loginUser = (User) session.getAttribute("loginUser"); %>
-<!--  アプリケーションスコープに保存されたつぶやきをリストを取得 -->
+<!-- アプリケーションスコープに保存されたつぶやきをリストを取得 -->
 <% List<Mutter> mutterList = (List<Mutter>) application.getAttribute("mutterList"); %>
+<!-- リクエストスコープに保存されたエラーメッセージを取得 -->
+<% String errorMsg = (String) request.getAttribute("errorMsg"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +22,9 @@
     <input type="text" name="text">
     <input type="submit" value="つぶやく">
   </form>
+  <% if(errorMsg != null) { %>
+    <p><%= errorMsg %></p>
+  <% } %>
   <% for(Mutter mutter : mutterList) { %>
     <p><%= mutter.getUserName() %>:<%= mutter.getText() %></p>
   <% } %>
